@@ -1,0 +1,12 @@
+:root {
+  --gray-light: #a9a9a9;
+  --gray-medium: #696969;
+  --gray-dark: #2f2f2f;
+}
+
+body {
+  margin: 0;
+  background-color: var(--gray-dark);
+  min-height: 100vh;
+}
+
