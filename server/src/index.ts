@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
+import roomController from './controllers/roomController';
 
 const PORT = process.env.PORT || 8080;
 
@@ -22,9 +23,8 @@ app.get('/', (request: Request, response: Response) => {
 
 io.on('connection', (socket) => {
   console.log(`User ${socket.id} connected`);
- 
-  // handle room events
-  // roomController(socket, io);
+
+  roomController(socket, io);
 
   socket.on('disconnect', () => {
     console.log(`User ${socket.id} disconnected`);

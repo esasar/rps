@@ -27,7 +27,7 @@ const generateId = () => {
 };
 
 // create a room
-const createRoom = (playerId: string, roomId: string = generateId()) => {
+const createRoom = (playerId: string, roomId: string = generateId()): Room => {
   if (roomId in rooms) throw new Error(`Room ${roomId} already exists`);
   
   const newRoom = { 
@@ -37,10 +37,12 @@ const createRoom = (playerId: string, roomId: string = generateId()) => {
 
   rooms[roomId] = newRoom;
   console.log(`Player ${playerId} created room ${roomId}`);
+
+  return newRoom;
 };
 
 // add player to a room
-const addPlayerToRoom = (playerId: string, roomId: string) => {
+const addPlayerToRoom = (playerId: string, roomId: string): Room => {
   if (!(roomId in rooms)) {
     throw new Error(`Room ${roomId} does not exist`);
   }
@@ -51,7 +53,9 @@ const addPlayerToRoom = (playerId: string, roomId: string) => {
   } 
 
   room.playerIds.push(playerId);
-  console.log(`Player ${playerId} has been added to room ${roomId}`)
+  console.log(`Player ${playerId} has been added to room ${roomId}`);
+
+  return room;
 };
 
 // remove player from a room
@@ -74,3 +78,12 @@ const deleteRoom = (roomId: string) => {
   delete rooms[roomId];
   console.log(`Room ${roomId} was deleted`);
 }
+
+const roomService = {
+  createRoom,
+  addPlayerToRoom,
+  removePlayerFromRoom,
+  deleteRoom,
+};
+
+export default roomService;
