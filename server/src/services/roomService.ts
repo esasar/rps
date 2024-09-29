@@ -13,9 +13,9 @@ const rooms: { [roomId: string]: Room } = {};
 const generateId = () => {
   const idGen = (length: number) => {
     const chars: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-    return Array.from({ length }, () => {
+    return Array.from({ length }, () => 
       chars.charAt(Math.floor(Math.random() * chars.length))
-    }).join('');
+    ).join('');
   };
 
   let id: string;
@@ -27,16 +27,18 @@ const generateId = () => {
 };
 
 // create a room
-const createRoom = (playerId: string, roomId: string = generateId()): Room => {
-  if (roomId in rooms) throw new Error(`Room ${roomId} already exists`);
+const createRoom = (playerId: string, roomId?: string): Room => {
+  const id = roomId || generateId();
+
+  if (id in rooms) throw new Error(`Room ${id} already exists`);
   
   const newRoom = { 
-    id: roomId,
+    id,
     playerIds: [playerId],
   };
 
-  rooms[roomId] = newRoom;
-  console.log(`Player ${playerId} created room ${roomId}`);
+  rooms[id] = newRoom;
+  console.log(`Player ${playerId} created room ${id}`);
 
   return newRoom;
 };
@@ -59,31 +61,53 @@ const addPlayerToRoom = (playerId: string, roomId: string): Room => {
 };
 
 // remove player from a room
-const removePlayerFromRoom = (playerId: string, roomId: string) => {
+const removePlayerFromRoom = (playerId: string, roomId: string): Room => {
   if (!(roomId in rooms)) {
     throw new Error(`Room ${roomId} does not exist`);
   }
 
-  const room = rooms[playerId];
-  room.playerIds = room.playerIds.filter(playerId => playerId !== playerId);
+  const room = rooms[roomId];
+  room.playerIds = room.playerIds.filter(id => id !== playerId);
   console.log(`Player ${playerId} was removed from room ${roomId}`);
-}
+
+  if (room.playerIds.length === 0) {
+    try {
+      deleteRoom(roomId);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  return room;
+};
 
 // delete room
 const deleteRoom = (roomId: string) => {
-  if (roomId in rooms) {
+  if (!(roomId in rooms)) {
     throw new Error(`Room ${roomId} does not exist`);
   }
 
   delete rooms[roomId];
   console.log(`Room ${roomId} was deleted`);
+};
+
+// get all rooms
+const getRooms = () => {
+  return rooms;
 }
+
+// get all room ids
+const getRoomIds = () => {
+  return Object.keys(rooms);
+};
 
 const roomService = {
   createRoom,
   addPlayerToRoom,
   removePlayerFromRoom,
   deleteRoom,
+  getRooms,
+  getRoomIds,
 };
 
 export default roomService;

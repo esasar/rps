@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import roomController from './controllers/roomController';
+import { setupCli } from './utils/cli'
 
 const PORT = process.env.PORT || 8080;
 
@@ -28,9 +29,13 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log(`User ${socket.id} disconnected`);
+
+    // we also need to remove the disconnected user from rooms they are in
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`server linstening on port http://localhost:${PORT}`);
+  console.log(`server listening on port http://localhost:${PORT}`);
 });
+
+setupCli();
