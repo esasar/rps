@@ -1,0 +1,41 @@
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.section {
+  width: clamp(340px, 15vw, 600px);
+  aspect-ratio: 16/8;
+  margin: 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.move {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  background-color: transparent;
+  font-size: 40px;
+  border: none;
+}
+
+.grayscale {
+  filter: grayscale(100%);
+}
