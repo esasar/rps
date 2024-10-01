@@ -4,6 +4,8 @@ interface Room {
   id: string;
   playerIds: string[];
   moves?: { [playerId: string]: Move };
+  scores?: { [playerId: string]: number };
+  round?: number;
 };
 
 // in-memory storage for rooms
@@ -96,6 +98,15 @@ const getRooms = () => {
   return rooms;
 }
 
+// get a room
+const getRoom = (roomId: string) => {
+  const room = rooms[roomId];
+  if (!room) {
+    throw new Error(`Room ${roomId} does not exist`);
+  }
+  return room;
+}
+
 // get all room ids
 const getRoomIds = () => {
   return Object.keys(rooms);
@@ -107,6 +118,7 @@ const roomService = {
   removePlayerFromRoom,
   deleteRoom,
   getRooms,
+  getRoom,
   getRoomIds,
 };
 

@@ -31,13 +31,13 @@ const leaveRoom = (socket: Socket, io: Server, roomId: string): void => {
   } catch (error) {
     socket.emit('room:error', { message: 'Failed to leave room' });
   }
-}
+};
 
 const leaveAllRooms = (socket: Socket, io: Server): void => {
   roomService.getRoomIds().forEach(roomId => {
     leaveRoom(socket, io, roomId);
-  })
-}
+  });
+};
 
 const roomController = (socket: Socket, io: Server): void => {
   socket.on('room:create', () => {

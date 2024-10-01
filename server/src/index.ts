@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import roomController from './controllers/roomController';
+import gameController from './controllers/gameController';
 import { setupCli } from './utils/cli'
 
 const PORT = process.env.PORT || 8080;
@@ -26,6 +27,8 @@ io.on('connection', (socket) => {
   console.log(`User ${socket.id} connected`);
 
   roomController(socket, io);
+
+  gameController(socket, io);
 
   socket.on('disconnect', () => {
     console.log(`User ${socket.id} disconnected`);
