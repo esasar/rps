@@ -1,7 +1,7 @@
 main {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 20px;
@@ -38,4 +38,59 @@ main {
 
 .grayscale {
   filter: grayscale(100%);
+}
+
+.room-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.room-controls button {
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 100%;
+}
+
+.room-controls .bottom {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: transparent;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.error {
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 10px 5px rgba(255, 0, 0, 0.2);
+  animation: shake 0.5s;
+}
+
+.room-controls input:focus {
+  outline: none;
+  background-color: rgb(255, 255, 255, 0.05);
+}
+
+.room-controls div > button {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  width: auto;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(var(--shake-negative-magnitude)); }
+  20% { transform: translateX(var(--shake-magnitude)); }
+  30% { transform: translateX(var(--shake-negative-magnitude)); }
+  40% { transform: translateX(var(--shake-magnitude)); }
+  50% { transform: translateX(var(--shake-negative-magnitude)); }
+  60% { transform: translateX(var(--shake-magnitude)); }
+  70% { transform: translateX(var(--shake-negative-magnitude)); }
+  80% { transform: translateX(var(--shake-magnitude)); }
+  90% { transform: translateX(var(--shake-negative-magnitude)); }
+  100% { transform: translateX(0); }
 }

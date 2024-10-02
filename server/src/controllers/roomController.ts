@@ -15,10 +15,9 @@ const joinRoom = (socket: Socket, io: Server, roomId: string): void => {
   try {
     const room = roomService.addPlayerToRoom(socket.id, roomId);
     socket.join(room.id);
-    socket.emit('room:joined', room);
-    socket.to(room.id).emit('room:joined', room);
+    io.to(room.id).emit('room:joined', room);
   } catch (error) {
-    socket.emit('room:error', { message: 'Failed to join room' })
+    socket.emit('room:error:join', { message: 'Failed to join room' })
   }
 };
 
