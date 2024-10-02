@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from '../hooks/useAppContext'
 
 export const GameControls: React.FC = () => {
   const { socket, room, setResult } = useAppContext();

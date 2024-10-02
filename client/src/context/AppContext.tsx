@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
+import React, { createContext, useEffect, useState, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { Room } from '../App.d';
 
@@ -57,13 +57,4 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   );
 };
 
-const useAppContext = () => {
-  const context = useContext(AppContext);
-  if (!context) {
-    throw new Error('useAppContext must be used within an AppProvider');
-  }
-
-  return context;
-};
-
-export { AppProvider, useAppContext };
+export { AppProvider, AppContext };

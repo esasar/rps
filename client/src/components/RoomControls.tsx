@@ -1,44 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useAppContext } from '../context/AppContext';
-import { Room } from '../App.d';
+import React, { useState } from 'react';
+import { useRoomSocket } from '../hooks/useRoomSocket';
 
 export const RoomControls: React.FC = () => {
-  const { socket, setRoom } = useAppContext();
+  const { createRoom, joinRoom, error } = useRoomSocket();
   const [joinRoomIdField, setJoinRoomIdField] = useState('');
-  const [error, setError] = useState<boolean>(false);
 
   const createRoomButtonHandler = () => {
-    socket?.emit('room:create');
+    createRoom();
   };
 
   const joinRoomButtonHandler = () => {
-    socket?.emit('room:join', joinRoomIdField);
+    joinRoom(joinRoomIdField);
   };
-
-  useEffect(() => {
-    socket?.on('room:joined', (room: Room) => {
-      setRoom(room);
-    });
-
-    socket?.on('room:created', (room: Room) => {
-      setRoom(room);
-    });
-
-    socket?.on('room:left', (room: Room) => { 
-      setRoom(room);
-    });
-
-    socket?.on('room:error:join', () => {
-      setError(true);
-      setTimeout(() => {
-        setError(false)
-      }, 500)
-    });
-
-    return () => {
-      socket?.off('room:error:join');
-    };
-  }, [socket]);
 
   return (
     <div className='room-controls'>

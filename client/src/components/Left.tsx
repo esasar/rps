@@ -1,7 +1,7 @@
 import React from 'react';
 import { GameControls } from './GameControls';
 import { RoomControls } from './RoomControls';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../hooks/useAppContext'
 
 export const Left: React.FC = () => {
   const { room } = useAppContext();
