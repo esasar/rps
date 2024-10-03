@@ -1,96 +1,74 @@
 main {
   min-height: 100vh;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  flex-wrap: wrap;
 }
 
-.section {
+.grid {
+  display: grid;
+  grid-template-rows: 60px;
+  grid-template-columns: 1fr;
+  grid-template-areas: 
+    "title"
+    "content";
+}
+
+.content {
+  grid-area: content;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+h1 {
+  grid-area: title;
+  text-align: center;
+}
+
+.pane {
   width: clamp(340px, 15vw, 600px);
   aspect-ratio: 16/8;
   margin: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
   text-align: center;
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  padding: 30px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.move {
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  text-align: center;
-  background-color: transparent;
-  font-size: 40px;
-  border: none;
-}
-
-.grayscale {
-  filter: grayscale(100%);
-}
-
-.room-controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-.room-controls button {
+button {
   padding: 10px;
   background-color: transparent;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   width: 100%;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  &:active {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
-.room-controls .bottom {
+
+input {
   padding: 10px;
   border-radius: 10px;
+  text-align: center;
   background-color: transparent;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.error {
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 10px 5px rgba(255, 0, 0, 0.2);
-  animation: shake 0.5s;
-}
-
-.room-controls input:focus {
-  outline: none;
-  background-color: rgb(255, 255, 255, 0.05);
-}
-
-.room-controls div > button {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  width: auto;
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  10% { transform: translateX(var(--shake-negative-magnitude)); }
-  20% { transform: translateX(var(--shake-magnitude)); }
-  30% { transform: translateX(var(--shake-negative-magnitude)); }
-  40% { transform: translateX(var(--shake-magnitude)); }
-  50% { transform: translateX(var(--shake-negative-magnitude)); }
-  60% { transform: translateX(var(--shake-magnitude)); }
-  70% { transform: translateX(var(--shake-negative-magnitude)); }
-  80% { transform: translateX(var(--shake-magnitude)); }
-  90% { transform: translateX(var(--shake-negative-magnitude)); }
-  100% { transform: translateX(0); }
+  &:focus {
+    outline: none;
+    background-color: rgb(255, 255, 255, 0.1);
+  }
 }

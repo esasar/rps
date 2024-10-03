@@ -1,15 +1,20 @@
 import React from 'react';
 import './App.css';
 import { AppProvider } from './context/AppContext';
-import { Left } from './components/Left';
-import { Right } from './components/Right';
+import { LeftPane } from './components/LeftPane/LeftPane';
+import { RightPane } from './components/RightPane/RightPane';
 
 const App: React.FC = () => {
   return (
     <AppProvider>
       <main>
-        <Left />
-        <Right />
+        <div className='grid'>
+          <h1>Rock-paper-scissors</h1>
+          <div className='content'>
+            <LeftPane />
+            <RightPane />
+          </div>
+        </div>
       </main>
     </AppProvider>
   );

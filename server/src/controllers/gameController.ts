@@ -1,15 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import gameService from '../services/gameService';
-
-type Move = 'rock' | 'paper' | 'scissors';
-
-interface Room {
-  id: string;
-  playerIds: string[];
-  moves?: { [playerId: string]: Move };
-  scores?: { [playerId: string]: number };
-  round?: number;
-};
+import { Move } from '../index.d';
 
 const makeMove = (socket: Socket, io: Server, roomId: string, move: Move) => {
   try {

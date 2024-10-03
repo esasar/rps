@@ -1,12 +1,4 @@
-type Move = 'rock' | 'paper' | 'scissors';
-
-interface Room {
-  id: string;
-  playerIds: string[];
-  moves?: { [playerId: string]: Move };
-  scores?: { [playerId: string]: number };
-  round?: number;
-};
+import { Move, Room } from '../index.d'
 
 // in-memory storage for rooms
 const rooms: { [roomId: string]: Room } = {};

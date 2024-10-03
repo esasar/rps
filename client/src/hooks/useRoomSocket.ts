@@ -29,7 +29,8 @@ export const useRoomSocket = () => {
   }, [socket, setRoom]);
   
   const createRoom = () => socket?.emit('room:create');
-  const joinRoom = (roomId: string) => socket?.emit('room:join, roomId', roomId);
+  const joinRoom = (roomId: string) => socket?.emit('room:join', roomId);
+  const leaveRoom = (roomId: string | undefined) => socket?.emit('room:leave', roomId);
 
-  return { createRoom, joinRoom, error };
+  return { createRoom, joinRoom, leaveRoom, error };
 };

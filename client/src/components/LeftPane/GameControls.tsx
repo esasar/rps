@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useAppContext } from '../hooks/useAppContext'
+import { useAppContext } from '../../hooks/useAppContext';
+import './GameControls.css';
+import { useRoomSocket } from "../../hooks/useRoomSocket";
 
 export const GameControls: React.FC = () => {
-  const { socket, room, setResult } = useAppContext();
+  const { socket, room, setRoom, setResult } = useAppContext();
+  const { leaveRoom } = useRoomSocket();
   const [move, setMove] = useState('');
 
   const makeMoveButtonHandler = (move: string) => {
@@ -11,7 +14,9 @@ export const GameControls: React.FC = () => {
   };
 
   const leaveRoomButtonHandler = () => {
-    socket?.emit('room:leave', room?.id);
+    setRoom(undefined);
+    setResult(undefined);
+    leaveRoom(room?.id);
   };
 
   useEffect(() => {
@@ -22,7 +27,7 @@ export const GameControls: React.FC = () => {
   }, []);
 
   return (
-    <div className='room-controls'>
+    <div className='game-controls'>
       <div>
         <button 
           className={`move ${(move ?? '') === 'rock' ? '' : ' grayscale'}`}
@@ -43,9 +48,9 @@ export const GameControls: React.FC = () => {
           {'\u270C\uFE0F'}
         </button>
       </div>
-      <div>
-        <span className='bottom'>Room ID: {room?.id}</span>
-        <button className='bottom-right' onClick={leaveRoomButtonHandler}>Leave room</button>
+      <div className='leave-room'>
+        <div className='room-id'>Room ID: {room?.id}</div>
+        <button className='leave-room-button' onClick={leaveRoomButtonHandler}>Leave room</button>
       </div>
     </div>
   )

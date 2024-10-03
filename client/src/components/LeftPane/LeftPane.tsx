@@ -1,12 +1,13 @@
 import React from 'react';
 import { GameControls } from './GameControls';
 import { RoomControls } from './RoomControls';
-import { useAppContext } from '../hooks/useAppContext'
+import { useAppContext } from '../../hooks/useAppContext'
+import './LeftPane.css'
 
-export const Left: React.FC = () => {
+export const LeftPane: React.FC = () => {
   const { room } = useAppContext();
   return (
-    <div className='section'>
+    <div className='pane'>
       {/* display room info and leave room button if user is in a room */}
       {room && (
         <GameControls />
