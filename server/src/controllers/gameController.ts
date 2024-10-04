@@ -4,12 +4,7 @@ import { Move } from '../index.d';
 
 const makeMove = (socket: Socket, io: Server, roomId: string, move: Move) => {
   try {
-    const result = gameService.playerMove(roomId, socket.id, move);
-    if (result) {
-      console.log(result);
-      io.to(roomId).emit('game:result', result);
-      gameService.resetMoves(roomId);
-    }
+    gameService.playerMove(roomId, socket.id, move);
   } catch (error) {
     io.emit('room:error', { message: 'failed to make a move' });
   }
@@ -18,7 +13,7 @@ const makeMove = (socket: Socket, io: Server, roomId: string, move: Move) => {
 const gameController = (socket: Socket, io: Server): void => {
   socket.on('game:move', (move: Move, roomId: string) => {
     makeMove(socket, io, roomId, move);
-  })
+  });
 }
 
 export default gameController;

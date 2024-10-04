@@ -1,5 +1,6 @@
 import readline from 'readline';
 import roomService from '../services/roomService';
+import logger from './logger';
 
 const commands = {
   help: 'list available commands',

@@ -4,6 +4,7 @@ import { Server } from 'socket.io';
 import roomController from './controllers/roomController';
 import gameController from './controllers/gameController';
 import { setupCli } from './utils/cli'
+import logger from './utils/logger';
 
 const PORT = process.env.PORT || 8080;
 
@@ -24,21 +25,21 @@ app.get('/', (request: Request, response: Response) => {
 });
 
 io.on('connection', (socket) => {
-  console.log(`User ${socket.id} connected`);
+  logger.info(`User ${socket.id} connected`);
 
   roomController(socket, io);
 
   gameController(socket, io);
 
   socket.on('disconnect', () => {
-    console.log(`User ${socket.id} disconnected`);
+    logger.info(`User ${socket.id} disconnected`);
 
     // we also need to remove the disconnected user from rooms they are in
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`server listening on port http://localhost:${PORT}`);
+  logger.info(`server listening on port http://localhost:${PORT}`);
 });
 
 setupCli();

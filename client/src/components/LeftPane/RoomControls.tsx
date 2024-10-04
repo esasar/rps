@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useRoomSocket } from '../../hooks/useRoomSocket';
 import './RoomControls.css'
+import { useAppContext } from '../../hooks/useAppContext';
 
 export const RoomControls: React.FC = () => {
-  const { createRoom, joinRoom, error } = useRoomSocket();
+  const { createRoom, joinRoom } = useRoomSocket();
+  const { errorMessage } = useAppContext();
   const [joinRoomIdField, setJoinRoomIdField] = useState('');
 
   const createRoomButtonHandler = () => {
@@ -23,12 +25,12 @@ export const RoomControls: React.FC = () => {
   return (
     <div className='room-controls'>
       <button onClick={createRoomButtonHandler}>Create Room</button>
-      <div className={`${error ? 'input-error' : ''}`}>
+      <div className={`${errorMessage ? 'input-error' : ''}`}>
         <input
           value={joinRoomIdField}
           onChange={inputChangeHandler}
           type='text'
-          placeholder={error ? 'bad id' : 'room id'}
+          placeholder='room id'
           maxLength={4}
         />
         <button className='join-room-button' onClick={joinRoomButtonHandler}>Join room</button>

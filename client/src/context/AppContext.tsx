@@ -10,6 +10,10 @@ interface AppContextType {
   setResult: React.Dispatch<React.SetStateAction<any>>;
   playerId: string | undefined;
   setPlayerId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  errorMessage: string | undefined;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
+  isGame: boolean | undefined;
+  setIsGame: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 }
 
 const URL = 'http://localhost:8080';
@@ -24,6 +28,8 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [room, setRoom] = useState<Room | undefined>(undefined);
   const [result, setResult] = useState<any | undefined>(undefined);
   const [playerId, setPlayerId] = useState<string | undefined>(undefined);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [isGame, setIsGame] = useState<boolean | undefined>(undefined);
   const socket = useRef<Socket | undefined>(undefined);
 
   useEffect(() => {
@@ -50,7 +56,11 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       result, 
       setResult, 
       playerId, 
-      setPlayerId 
+      setPlayerId, 
+      errorMessage,
+      setErrorMessage,
+      isGame,
+      setIsGame
     }}>
       {children}
     </AppContext.Provider>

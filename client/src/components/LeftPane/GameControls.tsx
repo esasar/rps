@@ -4,7 +4,7 @@ import './GameControls.css';
 import { useRoomSocket } from "../../hooks/useRoomSocket";
 
 export const GameControls: React.FC = () => {
-  const { socket, room, setRoom, setResult } = useAppContext();
+  const { socket, room, setRoom, setResult, setIsGame } = useAppContext();
   const { leaveRoom } = useRoomSocket();
   const [move, setMove] = useState('');
 
@@ -23,6 +23,7 @@ export const GameControls: React.FC = () => {
     socket?.on('game:result', (result: any) => {
       setMove('');
       setResult(result);
+      setIsGame(false);
     })
   }, []);
 

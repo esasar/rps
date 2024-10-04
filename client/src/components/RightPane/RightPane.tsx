@@ -2,14 +2,39 @@ import { useAppContext } from '../../hooks/useAppContext'
 import './RightPane.css'
 
 export const RightPane: React.FC = () => {
-  const { result, room, playerId } = useAppContext();
+  const { result, room, playerId, socket, isGame } = useAppContext();
+
+  const GameResult: React.FC<{ playerId: string, result: Record<string, any> }> = ({ playerId, result }) => {
+    // Function to find the opponent's ID
+    const getOpponentId = (id: string) => {
+      return Object.keys(result).find(key => key !== id && key !== 'winner');
+    };
+
+    // Determine the opponent's ID
+    const opponentId = getOpponentId(playerId);
+
+    return (
+      <div>
+        Your move: {result[playerId]} Opponent move: {result[opponentId]}
+      </div>
+    );
+  };
+
+  const handleReadyClick = () => {
+    socket?.emit('room:ready', room?.id, true);
+  }
 
   return (
     <div className='pane'>
-      {(result) ? (
+      {(isGame) ? (
+        <>
+          <div>Game is on!!!</div>
+        </>
+      ) : (result) ? (
         <>
           <div>{result?.winner === 'draw' ? 'Draw!' : result?.winner === playerId ? 'You win!' : 'You lost!'}</div>
-          <div>Choose a new move!</div>
+          <GameResult playerId={playerId} result={result} />
+          <button onClick={handleReadyClick}>Go agane</button>
         </>
       ) : (!room) ? (
         <>
@@ -18,8 +43,7 @@ export const RightPane: React.FC = () => {
         </>
       ) : (room?.playerIds.length === 2) ? (
         <>
-          <div>Opponent connected!</div>
-          <div>Game ends when both have chosen a move.</div>
+          <button onClick={handleReadyClick}>Ready </button>
         </>
       ) : (
         <>

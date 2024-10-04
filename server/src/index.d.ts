@@ -6,4 +6,5 @@ export interface Room {
   moves?: { [playerId: string]: Move };
   scores?: { [playerId: string]: number };
   round?: number;
+  ready?: { [playerId: string]: boolean };
 }

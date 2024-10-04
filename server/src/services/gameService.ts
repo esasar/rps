@@ -1,5 +1,6 @@
 import roomService from './roomService';
 import { Move, Room } from '../index.d'
+import logger from '../utils/logger';
 
 // move: move-it-defeats
 // 'rock' beats 'scissors' etc.
@@ -18,19 +19,38 @@ const playerMove = (roomId: string, playerId: string, move: Move) => {
     }
     if (!room.moves) room.moves = {};
     room.moves[playerId] = move;
-    console.log(`Player ${playerId} made move ${move}`);
+    logger.info(`Player ${playerId} made move ${move}`);
 
-    // if both players have made a move, determine outcome
-    if (Object.keys(room.moves).length === 2) {
-      return gameService.determineWinner(room);
-    }
   } catch (error) {
     throw error;
   }
 }
 
-const determineWinner = (room: Room) => {
+const determineWinner = (roomId: string) => {
+  const room = roomService.getRoom(roomId);
+
   const [player1, player2] = room.playerIds;
+  // if both players have not made a move, return
+  if (!room.moves[player1] || !room.moves[player2]) {
+    return { 
+      winner: 'draw', 
+      [player1]: undefined, [player2]: undefined 
+    };
+  }
+
+  // if only one player has made a move, return
+  if (!room.moves[player1] && room.moves[player2]) {
+    return { 
+      winner: player2, 
+      [player1]: undefined, [player2]: room.moves[player2] 
+    };
+  }
+  if (room.moves[player1] && !room.moves[player2]) {
+    return { 
+      winner: player1, 
+      [player1]: room.moves[player1], [player2]: undefined 
+    };
+  }
   const move1 = room.moves[player1];
   const move2 = room.moves[player2];
 
@@ -62,7 +82,9 @@ const determineWinner = (room: Room) => {
 const resetMoves = (roomId: string) => {
   try {
     const room = roomService.getRoom(roomId);
-    room.moves = {};
+    Object.keys(room.ready).forEach(playerId => {
+      room.ready[playerId] = false;
+    });
   } catch (error) {
     throw error;
   }
