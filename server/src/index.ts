@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import roomController from './controllers/roomController';
-import gameController from './controllers/gameController';
 import { setupCli } from './utils/cli'
 import logger from './utils/logger';
 
@@ -28,8 +27,6 @@ io.on('connection', (socket) => {
   logger.info(`User ${socket.id} connected`);
 
   roomController(socket, io);
-
-  gameController(socket, io);
 
   socket.on('disconnect', () => {
     logger.info(`User ${socket.id} disconnected`);

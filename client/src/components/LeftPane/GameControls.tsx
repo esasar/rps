@@ -4,12 +4,12 @@ import './GameControls.css';
 import { useRoomSocket } from "../../hooks/useRoomSocket";
 
 export const GameControls: React.FC = () => {
-  const { socket, room, setRoom, setResult, setIsGame } = useAppContext();
+  const { socket, room, setRoom, setResult, setIsGame, move, setMove } = useAppContext();
   const { leaveRoom } = useRoomSocket();
-  const [move, setMove] = useState('');
 
   const makeMoveButtonHandler = (move: string) => {
     setMove(move);
+    socket?.emit('room:ready', room?.id, true);
     socket?.emit('game:move', move, room?.id);
   };
 
@@ -21,7 +21,6 @@ export const GameControls: React.FC = () => {
 
   useEffect(() => {
     socket?.on('game:result', (result: any) => {
-      setMove('');
       setResult(result);
       setIsGame(false);
     })

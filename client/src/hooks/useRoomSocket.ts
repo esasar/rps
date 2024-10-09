@@ -9,7 +9,7 @@ export const useRoomSocket = () => {
     const handleRoomJoined = (room: Room) => setRoom(room);
     const handleRoomCreated = (room: Room) => setRoom(room);
     const handleRoomLeft = (room: Room) => {
-      // maybe set info box that opponent disconnected
+      setIsGame(false);
       setResult(undefined);
       setRoom(room);
     };
