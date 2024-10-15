@@ -6,9 +6,9 @@ import { Move } from '../index.d'
 const createRoom = (socket: Socket, io: Server): void => {
   try {
     const room = roomService.createRoom(socket.id)
-    socket.join(room.id)
     socket.emit('room:created', room)
     logger.info(`Room ${room.id} created by player ${socket.id}`)
+    joinRoom(socket, io, room.id)
   } catch (error) {
     logger.error(`Failed to create room: ${error.message}`)
     socket.emit('room:error', { message: 'Failed to create room' })

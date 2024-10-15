@@ -37,7 +37,7 @@ const createRoom = (playerId: string, roomId?: string): Room => {
   
   const newRoom = { 
     id,
-    playerIds: [playerId],
+    playerIds: [],
     isGameInProgress: false
   }
 

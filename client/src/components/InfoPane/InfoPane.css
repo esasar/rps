@@ -1,0 +1,38 @@
+.playermove {
+  font-size: 100px;
+  transform: scaleX(-1);
+  rotate: 90deg;
+}
+
+.opponentmove {
+  font-size: 100px;
+  rotate: -90deg;
+}
+
+.opponentmove-animated {
+  font-size: 100px;
+  animation: opponent-bounce 1s infinite;
+  pointer-events: none;
+  user-select: none;
+}
+
+.playermove-animated {
+  font-size: 100px;
+  animation: player-bounce 1s infinite;
+  pointer-events: none;
+  user-select: none;
+}
+
+
+@keyframes player-bounce {
+  0% { transform: scaleX(-1) rotate(-90deg); }
+  50% { transform: scaleX(-1) translateX(-15px) translateY(-30px) rotate(-60deg); }
+  100% { transform: scaleX(-1) translateX(0px) rotate(-90deg); }
+}
+
+@keyframes opponent-bounce {
+  0% { transform: rotate(-90deg); }
+  50% { transform: translateX(-15px) translateY(-30px) rotate(-60deg); }
+  100% { transform: translateX(0px) rotate(-90deg); }
+}
+

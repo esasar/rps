@@ -1,8 +1,26 @@
 main {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff6a88, #ff9a44, #fbd786, #f7797d); 
+  
+  background-size: 200% 200%;
+  animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .grid {
@@ -14,7 +32,7 @@ main {
     "content";
 }
 
-.content {
+.panes {
   grid-area: content;
   display: flex;
   flex-direction: row;
@@ -27,6 +45,13 @@ h1 {
   text-align: center;
 }
 
+.content {
+  min-height: calc(100vh - 30px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .pane {
   width: clamp(340px, 15vw, 600px);
   aspect-ratio: 16/8;
@@ -36,8 +61,8 @@ h1 {
   text-align: center;
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 5px;
   display: flex;
   flex-direction: column;

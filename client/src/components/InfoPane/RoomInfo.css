@@ -1,0 +1,24 @@
+.info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.helping-hand {
+  font-size: 60px;
+  animation: 2s linear .1s pointing infinite;
+  pointer-events: none;
+  user-select: none;
+  transition: ease-in 0.1s;
+}
+
+@media (max-width: 782px) {
+  .helping-hand {
+    rotate: 90deg;
+  }
+}
+
+@keyframes pointing {
+  25% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+}

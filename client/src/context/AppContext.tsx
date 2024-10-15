@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { Room } from '../App.d';
+import { Room, Move } from '../App.d';
 
 interface AppContextType {
   socket: Socket | undefined;
@@ -8,14 +8,14 @@ interface AppContextType {
   setRoom: React.Dispatch<React.SetStateAction<Room | undefined>>;
   result: any;
   setResult: React.Dispatch<React.SetStateAction<any>>;
-  playerId: string | undefined;
-  setPlayerId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  playerId: string;
+  setPlayerId: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string | undefined;
   setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
-  isGame: boolean | undefined;
-  setIsGame: React.Dispatch<React.SetStateAction<boolean | undefined>>;
-  move: string;
-  setMove: React.Dispatch<React.SetStateAction<string>>;
+  isGame: boolean;
+  setIsGame: React.Dispatch<React.SetStateAction<boolean>>;
+  move: Move;
+  setMove: React.Dispatch<React.SetStateAction<Move>>;
 }
 
 const URL = 'http://localhost:8080';
@@ -29,10 +29,10 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [room, setRoom] = useState<Room | undefined>(undefined);
   const [result, setResult] = useState<any | undefined>(undefined);
-  const [playerId, setPlayerId] = useState<string | undefined>(undefined);
+  const [playerId, setPlayerId] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-  const [isGame, setIsGame] = useState<boolean | undefined>(undefined);
-  const [move, setMove] = useState('');
+  const [isGame, setIsGame] = useState<boolean>(false);
+  const [move, setMove] = useState<Move>('rock');
   const socket = useRef<Socket | undefined>(undefined);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     socket.current = io(URL);
 
     socket.current.on('connect', () => {
-      setPlayerId(socket.current?.id);
+      setPlayerId(socket.current?.id || '');
     });
 
     // disconnect socket on unmount
